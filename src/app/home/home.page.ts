@@ -31,4 +31,6 @@ export class HomePage {
 
   //Gestionamos el cambio de segmentos
 
+  
+
 }
