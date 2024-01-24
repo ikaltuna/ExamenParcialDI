@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
 //Añadir los imports necesarios
 
 @Component({
@@ -23,7 +26,7 @@ export class PreguntasComponent implements OnInit {
   //Gestionará el visualizado del botón Volver a Jugar.
   mostrarBotonesAdicionales: boolean = false;
 
-  constructor() {}
+  constructor(private restServer: HttpClient) {}
 
   ngOnInit() {
 
@@ -31,15 +34,25 @@ export class PreguntasComponent implements OnInit {
 
   private cargarPreguntas() {
     //Llamamos al API mediante un observable
+    let datospregunta: Observable<Preguntas> = this.restServer.get<Preguntas>("https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple");
+
     
     //Suscripción al observable
  
+    datospregunta.subscribe( datos => {
+      console.log(datos);
+      this.listaPreguntas.push(datos);
+    }); 
       //Recorremos la lista de preguntas
 
         /* Mezclamos el orden del array:
          * Creamos un array con los 3 valores que vienen en "incorrect_answer" + la "correct_answer".
          * Si vemos la interface, podemos observar que --> correct_answer: string; incorrect_answers: string[];
         */
+      let respuestasAleatorias: string[] = [];
+      respuestasAleatorias.push(this.listaPreguntas[0].results[0].incorrect_answers[0]);
+      
+
         const respuestasAleatorias = this.mezclarOrdenArray([...pregunta.incorrect_answers, pregunta.correct_answer]);
         /* Modificamos la interface para que pueda guardar un string[] de las respuestas ordenadas aleatoriamente.
          * Con los valores que vienen en la API, rellenamos pregunta y a ello le añadimos respuestasAleatorias, para que 

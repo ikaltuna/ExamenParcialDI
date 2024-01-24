@@ -5,13 +5,29 @@ import { Component } from '@angular/core';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+ // Declaramos las variables necesarias
+interface Home {
+
+  título: string;
+  descripción: string;
+  url: string;
+
+}
 export class HomePage {
 
-  // Declaramos las variables necesarias
 
   constructor() {}
 
   //inicializamos el segmento con su valor inicial
+
+  valorInicial: Home = {
+
+    título: "string",
+    descripción: "string",
+    url: "string";
+
+  };
+
 
   //Gestionamos el cambio de segmentos
 
